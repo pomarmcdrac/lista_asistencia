@@ -804,6 +804,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         for(var element in ida) {
                           if(element.contrato == _contrato) {
                             isExist1 = true;
+                            print(isExist1);
                           }
                         }
                         for(var element in regreso) {
@@ -812,119 +813,92 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         }
 
-                        if(respuesta.isNotEmpty) {
-                          if(opcion == 'Check-In Ida' && isExist1 == false) {
-                            await updateIda(_contrato);
-                            // ignore: use_build_context_synchronously
-                            Navigator.pop(context);
-                            setState(() {
-                              _controller.text = '';
-                              const _RegistradosIda();
-                            });
-                            // ignore: use_build_context_synchronously
-                            Flushbar(
-                              reverseAnimationCurve: Curves.easeOutCirc,
-                              dismissDirection: FlushbarDismissDirection.VERTICAL,
-                              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-                              maxWidth: 250,
-                              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
-                              backgroundColor: Colors.grey,
-                              titleText: const Text(
-                                '¡Éxito!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              messageText: const Text(
-                                '¡Se ha registrado el contrato ingresado!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                              padding: const EdgeInsets.all(5),
-                              animationDuration: const Duration(seconds: 1),
-                              duration: const Duration(seconds: 7),
-                            ).show(context);
-                          }
-                          if(opcion == 'Check-In Regreso' && isExist2 == false) {
-                            await updateRegreso(_contrato);
-                            // ignore: use_build_context_synchronously
-                            Navigator.pop(context);
-                            setState(() {
-                              _controller.text = '';
-                              const _RegistradosRegreso();                      
-                            });
-                            // ignore: use_build_context_synchronously
-                            Flushbar(
-                              reverseAnimationCurve: Curves.easeOutCirc,
-                              dismissDirection: FlushbarDismissDirection.VERTICAL,
-                              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-                              maxWidth: 250,
-                              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
-                              backgroundColor: Colors.grey,
-                              titleText: const Text(
-                                '¡Éxito!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              messageText: const Text(
-                                '¡Se ha registrado el contrato ingresado!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                              padding: const EdgeInsets.all(5),
-                              animationDuration: const Duration(seconds: 1),
-                              duration: const Duration(seconds: 7),
-                            ).show(context);
-                          }
-                        } else {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pop(context);
-                          // ignore: use_build_context_synchronously
-                          _sinRegistro(context);
-                        }
+                      //   if(respuesta.isNotEmpty) {
+                      //     if(opcion == 'Check-In Ida' && isExist1 == false) {
+                      //       await updateIda(_contrato);
+                      //       // ignore: use_build_context_synchronously
+                      //       Navigator.pop(context);
+                      //       setState(() {
+                      //         _controller.text = '';
+                      //         const _RegistradosIda();
+                      //       });
+                      //       // ignore: use_build_context_synchronously
+                      //       Flushbar(
+                      //         reverseAnimationCurve: Curves.easeOutCirc,
+                      //         dismissDirection: FlushbarDismissDirection.VERTICAL,
+                      //         forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+                      //         maxWidth: 250,
+                      //         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
+                      //         backgroundColor: Colors.grey,
+                      //         titleText: const Text(
+                      //           '¡Éxito!',
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 14,
+                      //           ),
+                      //           textAlign: TextAlign.center,
+                      //         ),
+                      //         messageText: const Text(
+                      //           '¡Se ha registrado el contrato ingresado!',
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 16,
+                      //           ),
+                      //           textAlign: TextAlign.center,
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(10),
+                      //         padding: const EdgeInsets.all(5),
+                      //         animationDuration: const Duration(seconds: 1),
+                      //         duration: const Duration(seconds: 7),
+                      //       ).show(context);
+                      //     }
+                      //     if(opcion == 'Check-In Regreso' && isExist2 == false) {
+                      //       await updateRegreso(_contrato);
+                      //       // ignore: use_build_context_synchronously
+                      //       Navigator.pop(context);
+                      //       setState(() {
+                      //         _controller.text = '';
+                      //         const _RegistradosRegreso();                      
+                      //       });
+                      //       // ignore: use_build_context_synchronously
+                      //       Flushbar(
+                      //         reverseAnimationCurve: Curves.easeOutCirc,
+                      //         dismissDirection: FlushbarDismissDirection.VERTICAL,
+                      //         forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+                      //         maxWidth: 250,
+                      //         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
+                      //         backgroundColor: Colors.grey,
+                      //         titleText: const Text(
+                      //           '¡Éxito!',
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 14,
+                      //           ),
+                      //           textAlign: TextAlign.center,
+                      //         ),
+                      //         messageText: const Text(
+                      //           '¡Se ha registrado el contrato ingresado!',
+                      //           style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 16,
+                      //           ),
+                      //           textAlign: TextAlign.center,
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(10),
+                      //         padding: const EdgeInsets.all(5),
+                      //         animationDuration: const Duration(seconds: 1),
+                      //         duration: const Duration(seconds: 7),
+                      //       ).show(context);
+                      //     }
+                      //   } else {
+                      //     // ignore: use_build_context_synchronously
+                      //     Navigator.pop(context);
+                      //     // ignore: use_build_context_synchronously
+                      //     _sinRegistro(context);
+                      //   }
                       } else {
                         Navigator.pop(context);
-                        Flushbar(
-                          reverseAnimationCurve: Curves.easeOutCirc,
-                          dismissDirection: FlushbarDismissDirection.VERTICAL,
-                          forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-                          maxWidth: 250,
-                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
-                          backgroundColor: Colors.grey,
-                          titleText: const Text(
-                            'Sin información',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          messageText: const Text(
-                            'Sin datos para registrar',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          padding: const EdgeInsets.all(5),
-                          animationDuration: const Duration(seconds: 1),
-                          duration: const Duration(seconds: 7),
-                        ).show(context);
+                        _sinInformacion(context);
                       }
                     }, 
                     child: const Text('Registrar')
@@ -1583,6 +1557,47 @@ void _informacionErronea( BuildContext context) {
         ),
         content:  Text(
           'Selecciona un tipo de check-in e ingresa un contrato valido',
+          textAlign: TextAlign.start,
+            style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text(
+              'Entendido',
+              style: TextStyle(
+                color: AppTheme.primary,
+                fontSize: 14,
+              ),
+            )
+          )
+        ],
+      );
+    }
+  );
+}
+void _sinInformacion( BuildContext context) {
+  showDialog(
+    barrierDismissible: true,
+    context: context, 
+    builder: ( context ) {
+      return AlertDialog(
+        elevation: 5,
+        title: const Text(
+          'Sin información',
+          textAlign: TextAlign.start,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.grey[800],
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),
+        content:  Text(
+          'Sin datos para registrar',
           textAlign: TextAlign.start,
             style: TextStyle(
             color: Colors.grey[800],
