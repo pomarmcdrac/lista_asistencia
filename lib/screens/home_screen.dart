@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:app_asistencia/models/models.dart';
+import 'package:app_asistencia/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -47,10 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Future _scanCode() async {
       String result = await FlutterBarcodeScanner.scanBarcode( '#3D8BEF', 'Cancelar', false, ScanMode.QR);
-      setState(() {
-        _contrato = result;
-        _controller.text = result;
-      });
+      if (result.toString() != '-1') {
+        setState(() {
+            _controller.text = result;
+            _contrato = result;
+        });
+      }
     }
 
     void datosAfiliadoContrato( BuildContext context) {
@@ -148,30 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          'Clave',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600]
-                          ),
-                        ),
-                        Text(
-                          registros[0].tallaAf,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppTheme.primary,
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
                 const SizedBox( height: 5,),
-                if(registros[0].acompanante != '')
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -189,7 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Text(
-                            registros[0].acompanante!,
+                            registros[0].acompanante!.isNotEmpty
+                            ? registros[0].acompanante!
+                            : 'Sin acompañante',
                             textAlign: TextAlign.start,
                             style: const TextStyle(
                               fontSize: 14,
@@ -199,10 +184,79 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox( height: 5,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Clave IDA',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[600]
+                            ),
+                          ),
+                          Text(
+                            registros[0].tallaAf.isNotEmpty
+                            ? registros[0].tallaAf
+                            : 'Pendiente',
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox( height: 5,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Clave REGRESO',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[600]
+                            ),
+                          ),
+                          Text(
+                            registros[0].tallaAco!.isNotEmpty
+                            ? registros[0].tallaAco!
+                            : 'Pendiente',
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox( height: 5,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Clave',
+                          'Boleto Tren',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 12,
@@ -210,7 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].tallaAco!,
+                          registros[0].hotel1.isNotEmpty
+                          ? registros[0].hotel1
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -229,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Hotel 1',
+                          'Hotel día 1',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 12,
@@ -237,7 +293,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].hotel1,
+                          registros[0].hotel2.isNotEmpty
+                          ? registros[0].hotel2
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -256,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Hotel 2',
+                          'Hotel día 2, 3, 4',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 12,
@@ -264,7 +322,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].hotel2,
+                          registros[0].hotel3.isNotEmpty
+                          ? registros[0].hotel3
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -283,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Hotel 3',
+                          'Hotel día 5',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 12,
@@ -291,7 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].hotel3,
+                          registros[0].hotel4.isNotEmpty
+                          ? registros[0].hotel4
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -310,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Hotel 4',
+                          'Vuelo de Ida',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 12,
@@ -318,34 +380,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].hotel4,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppTheme.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox( height: 5,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Vuelo Ida',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600]
-                          ),
-                        ),
-                        Text(
-                          registros[0].vueloIda,
+                          registros[0].vueloIda.isNotEmpty
+                          ? registros[0].vueloIda
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -371,7 +408,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].vueloRegreso,
+                          registros[0].vueloRegreso.isNotEmpty
+                          ? registros[0].vueloRegreso
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -389,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       children: [
                         Text(
-                          'Abordo Autobus',
+                          'Autobús',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 12,
@@ -397,7 +436,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          registros[0].abordajeChepe,
+                          registros[0].abordajeChepe.isNotEmpty
+                          ? registros[0].abordajeChepe
+                          : 'Pendiente',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontSize: 14,
@@ -567,10 +608,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                         ),
                         onPressed: () async {
+                          const Animacion();
                           FocusManager.instance.primaryFocus?.unfocus();
-                          if (opcion == 'Check-In Ida' || opcion == 'Check-In Regreso') {
+                          if ((opcion == 'Check-In Ida' && _contrato == '') || (opcion == 'Check-In Regreso' && _contrato == '')) {
+                            // Navigator.pop(context);
                             await _scanCode();
-                            if(_contrato != '-1' || _contrato != '') {
+                            if(_contrato == -1) {
+                              print(_contrato);
+                              setState(() {
+                                _contrato = '';
+                              });
+                            }
+                            if(_contrato != '-1' && _contrato != '') {
                               final List<DatosBarranca> respuesta = await getDatosPorContrato(_contrato);
                               registros = respuesta;
                               if(respuesta.isNotEmpty) {
@@ -579,10 +628,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   acompa = respuesta[0].acompanante!;
                                   isAcompa = true;
                                   isNombre = true;
+                                  _controller.text = '';
                                 });
+                              } else {
+                                // ignore: use_build_context_synchronously
+                                _sinRegistro(context);
                               }
                             }
-                          } 
+                          } else {
+                            _informacionVacia(context);
+                          }
                         }, 
                         child: const Icon(
                           Icons.qr_code_rounded,
@@ -610,18 +665,36 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                         ),
                         onPressed: () async {
+                          _mostrarPantallaCarga(context);
                           FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {
+                            nombre = '';
+                            acompa = '';
+                            isAcompa = true;
+                            isNombre = true;
+                          });
                           if (opcion == 'Check-In Ida' && _contrato.isNotEmpty || opcion == 'Check-In Regreso' && _contrato.isNotEmpty) {
                             final List<DatosBarranca> respuesta = await getDatosPorContrato(_contrato);
                             registros = respuesta;
                             if(respuesta.isNotEmpty) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
                               setState(() {
                                 nombre = respuesta[0].nombre;
                                 acompa = respuesta[0].acompanante!;
                                 isAcompa = true;
                                 isNombre = true;
+                                _controller.text = '';
                               });
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+                              // ignore: use_build_context_synchronously
+                              _sinRegistro(context);
                             }
+                          } else {
+                            Navigator.pop(context);
+                            _informacionErronea(context);
                           }
                         }, 
                         child: const Text('Buscar')
@@ -720,24 +793,138 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     onPressed: () async {
-                      if (opcion == 'Check-In Ida' && _contrato.isNotEmpty || opcion == 'Check-In Regreso' && _contrato.isNotEmpty) {
+                      bool isExist1 = false;
+                      bool isExist2 = false;
+                      _mostrarPantallaCarga(context);
+                      if ((opcion == 'Check-In Ida' && _contrato.isNotEmpty) || (opcion == 'Check-In Regreso' && _contrato.isNotEmpty)) {
                         final List<DatosBarranca> respuesta = await getDatosPorContrato(_contrato);
+                        final List<RegistradosIdaElement> ida = await getRegistradosIda();
+                        final List<RegistradosRegresoElement> regreso = await getRegistradosRegreso();
+
+                        for(var element in ida) {
+                          if(element.contrato == _contrato) {
+                            isExist1 = true;
+                          }
+                        }
+                        for(var element in regreso) {
+                          if(element.contrato == _contrato) {
+                            isExist2 = true;
+                          }
+                        }
+
                         if(respuesta.isNotEmpty) {
-                          if(opcion == 'Check-In Ida') {
+                          if(opcion == 'Check-In Ida' && isExist1 == false) {
                             await updateIda(_contrato);
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
                             setState(() {
                               _controller.text = '';
                               const _RegistradosIda();
                             });
+                            // ignore: use_build_context_synchronously
+                            Flushbar(
+                              reverseAnimationCurve: Curves.easeOutCirc,
+                              dismissDirection: FlushbarDismissDirection.VERTICAL,
+                              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+                              maxWidth: 250,
+                              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
+                              backgroundColor: Colors.grey,
+                              titleText: const Text(
+                                '¡Éxito!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              messageText: const Text(
+                                '¡Se ha registrado el contrato ingresado!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              padding: const EdgeInsets.all(5),
+                              animationDuration: const Duration(seconds: 1),
+                              duration: const Duration(seconds: 7),
+                            ).show(context);
                           }
-                          if(opcion == 'Check-In Regreso') {
+                          if(opcion == 'Check-In Regreso' && isExist2 == false) {
                             await updateRegreso(_contrato);
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
                             setState(() {
                               _controller.text = '';
                               const _RegistradosRegreso();                      
                             });
+                            // ignore: use_build_context_synchronously
+                            Flushbar(
+                              reverseAnimationCurve: Curves.easeOutCirc,
+                              dismissDirection: FlushbarDismissDirection.VERTICAL,
+                              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+                              maxWidth: 250,
+                              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
+                              backgroundColor: Colors.grey,
+                              titleText: const Text(
+                                '¡Éxito!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              messageText: const Text(
+                                '¡Se ha registrado el contrato ingresado!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              padding: const EdgeInsets.all(5),
+                              animationDuration: const Duration(seconds: 1),
+                              duration: const Duration(seconds: 7),
+                            ).show(context);
                           }
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pop(context);
+                          // ignore: use_build_context_synchronously
+                          _sinRegistro(context);
                         }
+                      } else {
+                        Navigator.pop(context);
+                        Flushbar(
+                          reverseAnimationCurve: Curves.easeOutCirc,
+                          dismissDirection: FlushbarDismissDirection.VERTICAL,
+                          forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+                          maxWidth: 250,
+                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
+                          backgroundColor: Colors.grey,
+                          titleText: const Text(
+                            'Sin información',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          messageText: const Text(
+                            'Sin datos para registrar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          padding: const EdgeInsets.all(5),
+                          animationDuration: const Duration(seconds: 1),
+                          duration: const Duration(seconds: 7),
+                        ).show(context);
                       }
                     }, 
                     child: const Text('Registrar')
@@ -855,7 +1042,7 @@ class _RegistradosIda extends StatelessWidget {
       future: getRegistradosIda(),
       builder: (context, AsyncSnapshot<List<RegistradosIdaElement>> snapshot) {
 
-        if(!snapshot.hasData ) return Container();
+        if(!snapshot.hasData ) return const Animacion();
         
         registradosIda = snapshot.data!;
 
@@ -926,7 +1113,7 @@ class _RegistradosRegreso extends StatelessWidget {
       future: getRegistradosRegreso(),
       builder: (context, AsyncSnapshot<List<RegistradosRegresoElement>> snapshot) {
 
-        if(!snapshot.hasData ) return Container();
+        if(!snapshot.hasData ) return const Animacion();
         
         registradosRegreso = snapshot.data!;
 
@@ -1000,7 +1187,7 @@ class _NoRegistradosIda extends StatelessWidget {
       future: getFaltantesIda(),
       builder: (context, AsyncSnapshot<List<FaltantesIdaElement>> snapshot) {
 
-        if(!snapshot.hasData ) return Container();
+        if(!snapshot.hasData ) return const Animacion();
         
         faltantesIda = snapshot.data!;
         
@@ -1074,7 +1261,7 @@ class _NoRegistradosRegreso extends StatelessWidget {
       future: getFaltantesRegreso(),
       builder: (context, AsyncSnapshot<List<FaltantesRegresoElement>> snapshot) {
 
-        if(!snapshot.hasData ) return Container();
+        if(!snapshot.hasData ) return const Animacion();
         
         faltantesRegreso = snapshot.data!;
 
@@ -1267,4 +1454,155 @@ Future<bool> updateRegreso(String numero) async {
   final isTrue = IsTrue.fromJson(valores);
   datos = isTrue.isTrue;
   return datos;
+}
+
+void _mostrarPantallaCarga(BuildContext context) async {
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Container(
+        color: Colors.transparent,
+        height: 50,
+        width: 50,
+        child: AlertDialog(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.circular(10)),
+          content: const Material(
+              color: Colors.white,
+              child: SizedBox(
+                height: 80,
+                child: Animacion()
+                ),
+            ),
+        ),
+      );
+    },
+  );
+}
+
+void _sinRegistro( BuildContext context) {
+  showDialog(
+    barrierDismissible: true,
+    context: context, 
+    builder: ( context ) {
+      return AlertDialog(
+        elevation: 5,
+        title: const Text(
+          'Sin información',
+          textAlign: TextAlign.start,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.grey[800],
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),
+        content:  Text(
+          'El contrato ingresado, no se encuentra en la lista de ganadores',
+          textAlign: TextAlign.start,
+            style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text(
+              'Entendido',
+              style: TextStyle(
+                color: AppTheme.primary,
+                fontSize: 14,
+              ),
+            )
+          )
+        ],
+      );
+    }
+  );
+}
+void _informacionVacia( BuildContext context) {
+  showDialog(
+    barrierDismissible: true,
+    context: context, 
+    builder: ( context ) {
+      return AlertDialog(
+        elevation: 5,
+        title: const Text(
+          'Sin información',
+          textAlign: TextAlign.start,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.grey[800],
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),
+        content:  Text(
+          'Selecciona un tipo de check-in o verifica que no hayas ingresado un contrato',
+          textAlign: TextAlign.start,
+            style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text(
+              'Entendido',
+              style: TextStyle(
+                color: AppTheme.primary,
+                fontSize: 14,
+              ),
+            )
+          )
+        ],
+      );
+    }
+  );
+}
+void _informacionErronea( BuildContext context) {
+  showDialog(
+    barrierDismissible: true,
+    context: context, 
+    builder: ( context ) {
+      return AlertDialog(
+        elevation: 5,
+        title: const Text(
+          'Sin información',
+          textAlign: TextAlign.start,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.grey[800],
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),
+        content:  Text(
+          'Selecciona un tipo de check-in e ingresa un contrato valido',
+          textAlign: TextAlign.start,
+            style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text(
+              'Entendido',
+              style: TextStyle(
+                color: AppTheme.primary,
+                fontSize: 14,
+              ),
+            )
+          )
+        ],
+      );
+    }
+  );
 }
